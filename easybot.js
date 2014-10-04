@@ -3,7 +3,6 @@ exports.easybot = EasyBot;
 
 var fs = require("fs");
 var irc = require("irc");
-var _ = require("underscore");
 var S = require("string");
 var dateFormat = require("dateformat");
 var uuid = require('uuid');
