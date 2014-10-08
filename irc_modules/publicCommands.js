@@ -8,7 +8,7 @@
         var self = this;
         
         this.id = id;
-        this.name = "PiblicCommands";
+        this.name = "PublicCommands";
         
         this.client = client;
         this.admin = admin;
