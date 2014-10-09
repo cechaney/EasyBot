@@ -1,6 +1,6 @@
 
 var eb = require("./easybot.js");
 
-var easybot = new eb.EasyBot("admin", "#chan1", ["#chan1"], "irc.server.net", "easybot");
+var easybot = new eb.EasyBot("Chris", "#channel1", ["#channel1"], "localhost", "easybot");
 
 easybot.boot();

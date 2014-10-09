@@ -1,5 +1,5 @@
 
-exports.easybot = EasyBot;
+exports.EasyBot = EasyBot;
 
 var fs = require("fs");
 var irc = require("irc");
