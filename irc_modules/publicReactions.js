@@ -2,41 +2,49 @@
     exports.ircModule = PublicReactions;
     
     var S = require("string");
+    var irc = require("irc");
 
-    function PublicReactions(id, client, admin, channel, config, textRenderCallback){
+    function PublicReactions(bot, client, admin, channel, config){
         
         var self = this;
         
-        this.id = id;
         this.name = "PublicReactions";
 
+        this.bot = bot;
         this.client = client;
         this.admin = admin;
         this.channel = channel;
         this.config = config;
-        this.trc = textRenderCallback;
         this.reactions = {};
         
-        this.start = function(){
+        this.trc = function(text) {
+            return irc.colors.wrap("orange", text);
+        };
 
-            self.client.addListener("message" + self.channel, function(nick, text, message){
-                self.parseMessage(nick, text, message);
-            });
+        this.start = function() {
+            self.client.addListener("message", this.parseMessage);
+            console.log(this.name + " module started.");
+            return true;
+        };
 
+        this.stop = function() {
+            self.client.removeListener("message", this.parseMessage);
+            console.log(this.name + " module stopped.");
+            return true;
         };
         
-        this.parseMessage = function(nick, text, message){
+        this.parseMessage = function(from, to, message){
 
-            if(text !== null){
+            if(message !== null){
 
-                    text = text.toUpperCase();
+                    message = message.toUpperCase();
                     
                     for(var key in self.reactions){
 
-                        if(S(text).contains(key)){
+                        if(S(message).contains(key)){
                             
                             if(self.reactions && self.reactions[key]){
-                                self.reactions[key](text);
+                                self.reactions[key](message);
                             }
 
                         }				
@@ -45,7 +53,7 @@
             }            
         };
 
-        this.reactions["I'M HUNGRY"] = function(text){
+        this.reactions["I'M HUNGRY"] = function(message){
             self.client.say(
                 self.channel, 
                 self.trc("Hello Hungry, I'm EasyBot.  Nice to meet you!"));

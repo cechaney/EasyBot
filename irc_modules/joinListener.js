@@ -1,18 +1,20 @@
 
     exports.ircModule = JoinListener;
 
-    function JoinListener(id, client, admin, channel, config, textRenderCallback){
+    var S = require("string");
+    var irc = require("irc");
+
+    function JoinListener(bot, client, admin, channel, config){
         
         var self = this;
         
-        this.id = id;
         this.name = "JoinListener";
 
+        this.bot = bot;
         this.client = client;
         this.admin = admin;
         this.channel = channel;
         this.config = config;
-        this.trc = textRenderCallback;
         this.joins = {};
         
         this.team = {
